@@ -26,10 +26,7 @@ class Demo extends CModel
         )
     );
 
-    public function __construct()
-    {
-
-    }
+    public function __construct() {}
 
     public function getAllItems()
     {

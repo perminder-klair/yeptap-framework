@@ -1,4 +1,5 @@
 <?php
+//namespace Base\Components;
 class CController
 {
     public function render($viewFile, $data=array())

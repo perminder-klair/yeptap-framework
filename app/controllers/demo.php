@@ -1,5 +1,5 @@
 <?php
-
+//use Base\Components\CController;
 class Demo_Controller extends CController
 {
     public function main()
