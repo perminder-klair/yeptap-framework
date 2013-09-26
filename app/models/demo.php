@@ -1,5 +1,5 @@
 <?php
-class Demo
+class Demo extends CModel
 {
 
     private $items = array

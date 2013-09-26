@@ -1,6 +1,14 @@
 <?php
 
 //Automatically includes files containing classes that are called
+function autoloadBaseComponents($className) {
+    $filename = SERVER_ROOT . FRAMEWORK_DIR . "/components/" . $className . ".php";
+    //var_dump($filename);exit;
+    if (is_readable($filename)) {
+        require $filename;
+    }
+}
+
 function autoloadBaseModel($className) {
     $filename = SERVER_ROOT . FRAMEWORK_DIR . "/models/" . $className . ".php";
     //var_dump($filename);exit;
@@ -24,6 +32,7 @@ function autoloadController($className) {
     }
 }
 
+spl_autoload_register("autoloadBaseComponents");
 spl_autoload_register("autoloadBaseModel");
 spl_autoload_register("autoloadModel");
 spl_autoload_register("autoloadController");

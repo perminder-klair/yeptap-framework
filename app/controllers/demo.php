@@ -1,5 +1,6 @@
 <?php
-class Demo_Controller
+
+class Demo_Controller extends CController
 {
     public function main()
     {
@@ -7,13 +8,8 @@ class Demo_Controller
         $item = $model->getItem('test');
 
 
-        // Now we can nest our templates using multiple views
-        $header = new ViewBase('header_template');
-        $footer = new ViewBase('footer_template');
-        $master = new ViewBase('master_template');
-        $master->assign('header', $header->render(FALSE));
-        $master->assign('item', $item);
-        $master->assign('footer', $footer->render(FALSE));
-        $master->render();
+        $this->render('master_template', array(
+            'item' => $item,
+        ));
     }
 }
