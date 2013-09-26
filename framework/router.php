@@ -50,7 +50,7 @@ else
 }
 
 //once we have the controller instantiated, execute the default function
-//pass any GET varaibles to the main method
+//pass any GET variables to the main method
 $controller->main($getVars);
 
 //Init models
