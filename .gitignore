@@ -24,3 +24,6 @@ index
 
 # vagrant (virtual machine)
 .vagrant
+
+#dont include dev directory
+dev

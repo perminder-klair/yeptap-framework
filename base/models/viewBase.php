@@ -2,7 +2,7 @@
 /**
  * Handles the view functionality of our MVC framework
  */
-class View_Model
+class ViewBase
 {
     /**
      * Holds variables assigned to template

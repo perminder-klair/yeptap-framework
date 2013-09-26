@@ -18,9 +18,9 @@ define('SITE_ROOT' , 'http://localhost/scripts/micro-framework/');
 define('APP_DIR' , 'app');
 
 //yoursite.com is your webserver
-define('FRAMEWORK_DIR' , 'framework');
+define('FRAMEWORK_DIR' , 'base');
 
 /**
  * Fetch the router
  */
-require_once(SERVER_ROOT . '/' . FRAMEWORK_DIR . '/' . 'router.php');
+require_once(SERVER_ROOT . '/' . FRAMEWORK_DIR . '/' . 'bootstrap.php');

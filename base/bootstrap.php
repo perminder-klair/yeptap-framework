@@ -1,4 +1,33 @@
 <?php
+
+//Automatically includes files containing classes that are called
+function autoloadBaseModel($className) {
+    $filename = SERVER_ROOT . FRAMEWORK_DIR . "/models/" . $className . ".php";
+    //var_dump($filename);exit;
+    if (is_readable($filename)) {
+        require $filename;
+    }
+}
+
+function autoloadModel($className) {
+    $filename = SERVER_ROOT . APP_DIR . "/models/" . $className . ".php";
+    //var_dump($filename);exit;
+    if (is_readable($filename)) {
+        require $filename;
+    }
+}
+
+function autoloadController($className) {
+    $filename = SERVER_ROOT . APP_DIR . "/controllers/" . $className . ".php";
+    if (is_readable($filename)) {
+        require $filename;
+    }
+}
+
+spl_autoload_register("autoloadBaseModel");
+spl_autoload_register("autoloadModel");
+spl_autoload_register("autoloadController");
+
 /**
  * This controller routes all incoming requests to the appropriate controller
  */
@@ -52,52 +81,3 @@ else
 //once we have the controller instantiated, execute the default function
 //pass any GET variables to the main method
 $controller->main($getVars);
-
-//Init models
-//Automatically includes files containing classes that are called
-function __autoload($className)
-{
-    // Parse out filename where class should be located
-    // This supports names like 'Example_Model' as well as 'Example_Two_Model'
-    list($suffix, $filename) = preg_split('/_/', strrev($className), 2);
-    $filename = strrev($filename);
-    $suffix = strrev($suffix);
-
-    //select the folder where class should be located based on suffix
-    switch (strtolower($suffix))
-    {
-        case 'model':
-
-            $folder = '/models/';
-
-            break;
-
-        case 'library':
-
-            $folder = '/libraries/';
-
-            break;
-
-        case 'driver':
-
-            $folder = '/libraries/drivers/';
-
-            break;
-    }
-
-    //compose file name
-    $file = SERVER_ROOT . '/' . APP_DIR . $folder . strtolower($filename) . '.php';
-
-    //fetch file
-    if (file_exists($file))
-    {
-        //get file
-        include_once($file);
-    }
-    else
-    {
-        //file does not exist!
-        die("File '$filename' containing class '$className' not found in
-'$folder'.");
-    }
-}
