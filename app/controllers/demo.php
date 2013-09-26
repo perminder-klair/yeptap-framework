@@ -8,6 +8,7 @@ class Demo_Controller
         $footer = new View_Model('footer_template');
         $master = new View_Model('master_template');
         $master->assign('header', $header->render(FALSE));
+        $master->assign('test', 'test');
         $master->assign('footer', $footer->render(FALSE));
         $master->render();
     }

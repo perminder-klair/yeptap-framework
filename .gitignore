@@ -24,8 +24,3 @@ index
 
 # vagrant (virtual machine)
 .vagrant
-
-# ignore composer vendors
-/protected/vendor/
-/vendor/
-composer.lock

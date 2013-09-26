@@ -1,15 +1,23 @@
 <?php
 
 /**
- * WEB_ROOT_FOLDER is the name of the parent folder you created these 
- * documents in.
+ * Set error reporting and display errors settings.  You will want to change these when in production.
  */
-define('SERVER_ROOT' , getcwd());
+error_reporting(-1);
+ini_set('display_errors', 1);
+
+/**
+ * Website document root
+ */
+define('SERVER_ROOT', __DIR__.DIRECTORY_SEPARATOR);
 
 //yoursite.com is your webserver
 define('SITE_ROOT' , 'http://localhost/scripts/micro-framework/');
 
+//yoursite.com is your webserver
+define('APP_DIR' , 'app');
+
 /**
  * Fetch the router
  */
-require_once(SERVER_ROOT . '/controllers/' . 'router.php');
+require_once(SERVER_ROOT . '/' . APP_DIR . '/controllers/' . 'router.php');
