@@ -21,7 +21,7 @@ class View_Model
     {
         //compose file name
         $file = SERVER_ROOT . '/views/' . strtolower($template) . '.php';
-    
+
         if (file_exists($file))
         {
             /**
@@ -30,12 +30,12 @@ class View_Model
              * to the view!
              */
             $this->render = $file;
-        }        
+        }
     }
 
     /**
      * Receives assignments from controller and stores in local data array
-     * 
+     *
      * @param $variable
      * @param $value
      */
@@ -44,12 +44,35 @@ class View_Model
         $this->data[$variable] = $value;
     }
 
+    /**
+     * Render the output directly to the page, or optionally, return the
+     * generated output to caller.
+     *
+     * @param $direct_output Set to any non-TRUE value to have the
+     * output returned rather than displayed directly.
+     */
+    public function render($direct_output = TRUE)
+    {
+        // Turn output buffering on, capturing all output
+        if ($direct_output !== TRUE)
+        {
+            ob_start();
+        }
+
+        // Parse data variables into local variables
+        $data = $this->data;
+
+        // Get template
+        include($this->render);
+
+        // Get the contents of the buffer and return it
+        if ($direct_output !== TRUE)
+        {
+            return ob_get_clean();
+        }
+    }
+
     public function __destruct()
     {
-        //parse data variables into local variables, so that they render to the view
-        $data = $this->data;
-    
-        //render view
-        include($this->render);
     }
 }

@@ -18,7 +18,7 @@ foreach ($parsed as $argument)
 {
     //split GET vars along '=' symbol to separate variable, values
     list($variable , $value) = preg_split('/[\s=]+/' , $argument);
-    $getVars[$variable] = $value;
+    $getVars[$variable] = urldecode($value);
 }
 
 //compute the path to the file
@@ -57,21 +57,47 @@ $controller->main($getVars);
 //Automatically includes files containing classes that are called
 function __autoload($className)
 {
-    //parse out filename where class should be located
-    list($filename , $suffix) = preg_split('/[\s_]+/' , $className);
+    // Parse out filename where class should be located
+    // This supports names like 'Example_Model' as well as 'Example_Two_Model'
+    list($suffix, $filename) = preg_split('/_/', strrev($className), 2);
+    $filename = strrev($filename);
+    $suffix = strrev($suffix);
+
+    //select the folder where class should be located based on suffix
+    switch (strtolower($suffix))
+    {
+        case 'model':
+
+            $folder = '/models/';
+
+            break;
+
+        case 'library':
+
+            $folder = '/libraries/';
+
+            break;
+
+        case 'driver':
+
+            $folder = '/libraries/drivers/';
+
+            break;
+    }
 
     //compose file name
-    $file = SERVER_ROOT . '/models/' . strtolower($filename) . '.php';
+    $file = SERVER_ROOT . $folder . strtolower($filename) . '.php';
 
     //fetch file
     if (file_exists($file))
     {
         //get file
-        include_once($file);        
+        include_once($file);
     }
     else
     {
         //file does not exist!
-        die("File '$filename' containing class '$className' not found.");    
+        die("File '$filename' containing class '$className' not found in
+'$folder'.");
     }
 }

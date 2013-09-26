@@ -114,4 +114,14 @@ class MysqlImproved_Driver extends Database_Library
 
         return FALSE;
     }
+
+    /**
+     * Sanitize data to be used in a query
+     *
+     * @param $data
+     */
+    public function escape($data)
+    {
+        return $this->connection->real_escape_string($data);
+    }
 }

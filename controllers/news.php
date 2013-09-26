@@ -29,14 +29,24 @@ class News_Controller
 
         $newsModel = new News_Model;
 	    //get an article
-	    $article = $newsModel->get_article($getVars['article']);
+        $article = $newsModel->get_article($getVars['author']);
 	    print_r($article);
 
 	    //create a new view and pass it our template
         $view = new View_Model($this->template);
-    
+
         //assign article data to view
         $view->assign('title' , $article['title']);
         $view->assign('content' , $article['content']);
+
+        /*
+         // Now we can nest our templates using multiple views
+$header = new View_Model('header_template');
+$footer = new View_Model('footer_template');
+$master = new View_Model('master_template');
+$master->assign('header', $header->render(FALSE));
+$master->assign('footer', $footer->render(FALSE));
+$master->render();
+         */
     }
 }
