@@ -20,6 +20,21 @@ define('APP_DIR' , 'app');
 //yoursite.com is your webserver
 define('FRAMEWORK_DIR' , 'base');
 
+define('DS', DIRECTORY_SEPARATOR);
+define('ROOT', dirname(dirname(__FILE__)));
+
+/** Configuration Variables **/
+
+define ('DEVELOPMENT_ENVIRONMENT',true);
+
+define('DB_NAME', 'yourdatabasename');
+define('DB_USER', 'yourusername');
+define('DB_PASSWORD', 'yourpassword');
+define('DB_HOST', 'localhost');
+
+require_once 'base/Autoloader.php';
+\Yeptap\Autoloader::register();
+
 /**
  * Fetch the router
  */

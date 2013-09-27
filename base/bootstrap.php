@@ -1,92 +1,81 @@
 <?php
 
-//Automatically includes files containing classes that are called
-function autoloadBaseComponents($className) {
-    $filename = SERVER_ROOT . FRAMEWORK_DIR . "/components/" . $className . ".php";
-    //var_dump($filename);exit;
-    if (is_readable($filename)) {
-        require $filename;
+/** Check if environment is development and display errors **/
+
+function setReporting() {
+    if (DEVELOPMENT_ENVIRONMENT == true) {
+        error_reporting(E_ALL);
+        ini_set('display_errors','On');
+    } else {
+        error_reporting(E_ALL);
+        ini_set('display_errors','Off');
+        ini_set('log_errors', 'On');
+        ini_set('error_log', ROOT.DS.'tmp'.DS.'logs'.DS.'error.log');
     }
 }
 
-function autoloadBaseModel($className) {
-    $filename = SERVER_ROOT . FRAMEWORK_DIR . "/models/" . $className . ".php";
-    //var_dump($filename);exit;
-    if (is_readable($filename)) {
-        require $filename;
+/** Check for Magic Quotes and remove them **/
+
+function stripSlashesDeep($value) {
+    $value = is_array($value) ? array_map('stripSlashesDeep', $value) : stripslashes($value);
+    return $value;
+}
+
+function removeMagicQuotes() {
+    if ( get_magic_quotes_gpc() ) {
+        $_GET    = stripSlashesDeep($_GET   );
+        $_POST   = stripSlashesDeep($_POST  );
+        $_COOKIE = stripSlashesDeep($_COOKIE);
     }
 }
 
-function autoloadModel($className) {
-    $filename = SERVER_ROOT . APP_DIR . "/models/" . $className . ".php";
-    //var_dump($filename);exit;
-    if (is_readable($filename)) {
-        require $filename;
+/** Check register globals and remove them **/
+
+function unregisterGlobals() {
+    if (ini_get('register_globals')) {
+        $array = array('_SESSION', '_POST', '_GET', '_COOKIE', '_REQUEST', '_SERVER', '_ENV', '_FILES');
+        foreach ($array as $value) {
+            foreach ($GLOBALS[$value] as $key => $var) {
+                if ($var === $GLOBALS[$key]) {
+                    unset($GLOBALS[$key]);
+                }
+            }
+        }
     }
 }
 
-function autoloadController($className) {
-    $filename = SERVER_ROOT . APP_DIR . "/controllers/" . $className . ".php";
-    if (is_readable($filename)) {
-        require $filename;
-    }
-}
+/** Main Call Function **/
 
-spl_autoload_register("autoloadBaseComponents");
-spl_autoload_register("autoloadBaseModel");
-spl_autoload_register("autoloadModel");
-spl_autoload_register("autoloadController");
-
-/**
- * This controller routes all incoming requests to the appropriate controller
- */
-
-//fetch the passed request
-$request = $_SERVER['QUERY_STRING'];
-
-//parse the page request and other GET variables
-$parsed = explode('&' , $request);
-
-//the page is the first element
-$page = array_shift($parsed);
-
-//the rest of the array are get statements, parse them out.
-$getVars = array();
-foreach ($parsed as $argument)
-{
-    //split GET vars along '=' symbol to separate variable, values
-    list($variable , $value) = preg_split('/[\s=]+/' , $argument);
-    $getVars[$variable] = urldecode($value);
-}
-
-//compute the path to the file
-$target = SERVER_ROOT . '/' . APP_DIR . '/controllers/' . $page . '.php';
-
-//get target
-if (file_exists($target))
-{
-    include_once($target);
-
-    //modify page to fit naming convention
-    $class = ucfirst($page) . '_Controller';
-
-    //instantiate the appropriate class
-    if (class_exists($class))
-    {
-        $controller = new $class;
-    }
+function callHook() {
+    if (isset($_GET['url']))
+        $url = $_GET['url'];
     else
-    {
-        //did we name our class correctly?
-        die('class does not exist!');
+        $url = 'main/index';
+
+    $urlArray = array();
+    $urlArray = explode("/",$url);
+
+    $controller = $urlArray[0];
+    array_shift($urlArray);
+    $action = $urlArray[0];
+    array_shift($urlArray);
+    $queryString = $urlArray;
+
+    $controllerName = $controller;
+    $controller = ucwords($controller);
+    $model = rtrim($controller, 's');
+    $controller .= 'Controller';
+
+    $dispatch = new $controller($model,$controllerName,$action);
+
+    if ((int)method_exists($controller, $action)) {
+        call_user_func_array(array($dispatch,$action),$queryString);
+    } else {
+        /* Error Generation Code Here */
     }
 }
-else
-{
-    //can't find the file in 'controllers'! 
-    die('page does not exist!');
-}
 
-//once we have the controller instantiated, execute the default function
-//pass any GET variables to the main method
-$controller->main($getVars);
+setReporting();
+removeMagicQuotes();
+unregisterGlobals();
+callHook();
