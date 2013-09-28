@@ -21,7 +21,7 @@ class Controller
 
     }
 
-    function render($name,$value)
+    function set($name,$value)
     {
         $this->_template->set($name,$value);
     }

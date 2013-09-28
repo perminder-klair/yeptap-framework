@@ -1,2 +1,1 @@
-<?php
-var_dump('hi');
+<p><?php echo $greet; ?></p>
