@@ -1,7 +1,8 @@
 <?php
 
 /** Check if environment is development and display errors **/
-function setReporting() {
+function setReporting()
+{
     if (DEVELOPMENT_ENVIRONMENT == true) {
         error_reporting(E_ALL);
         ini_set('display_errors','On');
@@ -14,12 +15,14 @@ function setReporting() {
 }
 
 /** Check for Magic Quotes and remove them **/
-function stripSlashesDeep($value) {
+function stripSlashesDeep($value)
+{
     $value = is_array($value) ? array_map('stripSlashesDeep', $value) : stripslashes($value);
     return $value;
 }
 
-function removeMagicQuotes() {
+function removeMagicQuotes()
+{
     if ( get_magic_quotes_gpc() ) {
         $_GET    = stripSlashesDeep($_GET   );
         $_POST   = stripSlashesDeep($_POST  );
@@ -28,7 +31,8 @@ function removeMagicQuotes() {
 }
 
 /** Check register globals and remove them **/
-function unregisterGlobals() {
+function unregisterGlobals()
+{
     if (ini_get('register_globals')) {
         $array = array('_SESSION', '_POST', '_GET', '_COOKIE', '_REQUEST', '_SERVER', '_ENV', '_FILES');
         foreach ($array as $value) {
@@ -42,37 +46,47 @@ function unregisterGlobals() {
 }
 
 /** Main Call Function **/
-function callHook() {
-    if (isset($_GET['url']))
-        $url = $_GET['url'];
-    else
-        $url = 'main/index';
+function callHook()
+{
+    global $url;
+    global $default;
 
-    $urlArray = array();
-    $urlArray = explode("/",$url);
+    $queryString = array();
 
-    $controller = $urlArray[0];
-    array_shift($urlArray);
-    $action = $urlArray[0];
-    array_shift($urlArray);
-    $queryString = $urlArray;
+    if (!isset($url)) {
+        $controller = $default['controller'];
+        $action = $default['action'];
+    } else {
+        $url = routeURL($url);
+        $urlArray = array();
+        $urlArray = explode("/",$url);
+        $controller = $urlArray[0];
+        array_shift($urlArray);
+        if (isset($urlArray[0])) {
+            $action = $urlArray[0];
+            array_shift($urlArray);
+        } else {
+            $action = 'index'; // Default Action
+        }
+        $queryString = $urlArray;
+    }
 
-    $controllerName = $controller;
-    $controller = ucwords($controller);
-    $model = rtrim($controller, 's');
-    $controller .= 'Controller';
+    $controllerName = ucfirst($controller).'Controller';
 
-    $dispatch = new $controller($model,$controllerName,$action);
+    $dispatch = new $controllerName($controller,$action);
 
-    if ((int)method_exists($controller, $action)) {
+    if ((int)method_exists($controllerName, $action)) {
+        call_user_func_array(array($dispatch,"beforeAction"),$queryString);
         call_user_func_array(array($dispatch,$action),$queryString);
+        call_user_func_array(array($dispatch,"afterAction"),$queryString);
     } else {
         /* Error Generation Code Here */
     }
 }
 
 /** GZip Output **/
-function gzipOutput() {
+function gzipOutput()
+{
     $ua = $_SERVER['HTTP_USER_AGENT'];
 
     if (0 !== strpos($ua, 'Mozilla/4.0 (compatible; MSIE ')
