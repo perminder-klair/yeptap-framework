@@ -11,8 +11,8 @@ class Autoloader
                 array_unique(
                     array_merge(
                         array(
-                            SERVER_ROOT . FRAMEWORK_DIR,
-                            SERVER_ROOT . FRAMEWORK_DIR . '/helpers',
+                            __DIR__ . DIRECTORY_SEPARATOR,
+                            __DIR__ . DIRECTORY_SEPARATOR . 'helpers',
                             SERVER_ROOT . APP_DIR . '/models',
                             SERVER_ROOT . APP_DIR . '/controllers',
                         ),
