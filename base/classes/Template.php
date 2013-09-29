@@ -30,7 +30,7 @@ class Template {
 
         $viewFile = $this->_viewPath . $this->_action . '.php';
         if (!file_exists($viewFile))
-            return false;
+            throw new YeptapException('View file does not exists: ' . $viewFile);
 
         if ($renderLayout === true) {
             if (file_exists($this->_layoutPath . $this->defaultLayout .'.php')) {
@@ -51,6 +51,8 @@ class Template {
 
         if (file_exists($this->_viewPath . $partialFile . '.php')) {
             include ($this->_viewPath . $partialFile . '.php');
+        } else {
+            throw new YeptapException('Partial view file does not exists: ' . $this->_viewPath . $partialFile . '.php');
         }
     }
 

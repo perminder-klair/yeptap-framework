@@ -10,6 +10,7 @@ class Controller
     {
         $this->_controller = ucfirst($controller);
         $this->_action = $action;
+
         $this->_template = new Template($controller,$action);
     }
 

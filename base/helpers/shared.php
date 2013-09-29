@@ -96,14 +96,14 @@ function callHook()
 
     $controllerName = ucfirst($controller).'Controller';
 
-    $dispatch = new $controllerName($controller,$action);
-
     if ((int)method_exists($controllerName, $action)) {
+        $dispatch = new $controllerName($controller,$action);
+
         call_user_func_array(array($dispatch,"beforeAction"),$queryString);
         call_user_func_array(array($dispatch,$action),$queryString);
         call_user_func_array(array($dispatch,"afterAction"),$queryString);
     } else {
-        /* Error Generation Code Here */
+        throw new YeptapException($action . ' method does not exists');
     }
 }
 
@@ -123,6 +123,19 @@ function gzipOutput()
             || ($version == 6  && false === strpos($ua, 'SV1'))
     );
 }
+
+function my_exception_handler($e) {
+    echo '<h1>Yeptap has caught an exception</h1>';
+    echo '<h3>' . $e->getMessage() . '</h3>';
+
+    if (DEVELOPMENT_ENVIRONMENT===true) {
+        Debug::dump($e->getTraceAsString());
+    }
+    if (LOG_ERRORS===true)
+        Logger::newMessage($e);
+}
+
+set_exception_handler('my_exception_handler');
 
 /** Get Required Files **/
 gzipOutput() || ob_start("ob_gzhandler");
