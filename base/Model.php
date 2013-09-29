@@ -3,12 +3,12 @@ class Model
 {
     protected $_model;
 
-    function __construct()
+    public function __construct()
     {
 
     }
 
-    function __destruct()
+    public function __destruct()
     {
 
     }

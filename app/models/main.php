@@ -1,6 +1,11 @@
 <?php
 class Main extends Model
 {
+    public function __construct()
+    {
+
+    }
+
     /**
      * @param $name
      * @param $value
