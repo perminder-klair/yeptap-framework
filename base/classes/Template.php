@@ -8,6 +8,10 @@ class Template {
     protected $_layoutPath;
     public $defaultLayout = 'main';
 
+    /**
+     * @param $controller
+     * @param $action
+     */
     public function __construct($controller, $action)
     {
         $this->_controller = $controller;
@@ -17,7 +21,11 @@ class Template {
         $this->_layoutPath = SERVER_ROOT . APP_DIR . DS . 'views' . DS . 'layouts' . DS;
     }
 
-    /** Set Variables **/
+    /**
+     * Set Variables
+     * @param $name
+     * @param $value
+     */
     public function set($name, $value)
     {
         $this->variables[$name] = $value;
@@ -45,6 +53,11 @@ class Template {
         }
     }
 
+    /**
+     * @param $partialFile
+     * @param array $data
+     * @throws YeptapException
+     */
     public function renderPartial($partialFile, $data=array())
     {
         extract($data);

@@ -1,6 +1,11 @@
 <?php
 class Logger
 {
+    /**
+     * @param YeptapException $exception
+     * @param bool $clear
+     * @param null $error_files
+     */
     public static function newMessage(
         YeptapException $exception,
         $clear = false,

@@ -30,7 +30,9 @@ function removeMagicQuotes()
     }
 }
 
-/** Check register globals and remove them **/
+/**
+ * Check register globals and remove them
+ */
 function unregisterGlobals()
 {
     if (ini_get('register_globals')) {
@@ -45,7 +47,14 @@ function unregisterGlobals()
     }
 }
 
-/** Secondary Call Function **/
+/**
+ * Secondary Call Function
+ * @param $controller
+ * @param $action
+ * @param null $queryString
+ * @param int $render
+ * @return mixed
+ */
 function performAction($controller,$action,$queryString = null,$render = 0)
 {
     $controllerName = ucfirst($controller).'Controller';
@@ -54,7 +63,11 @@ function performAction($controller,$action,$queryString = null,$render = 0)
     return call_user_func_array(array($dispatch,$action),$queryString);
 }
 
-/** Routing **/
+/**
+ * Routing
+ * @param $url
+ * @return mixed
+ */
 function routeURL($url)
 {
     global $routing;
@@ -68,7 +81,10 @@ function routeURL($url)
     return ($url);
 }
 
-/** Main Call Function **/
+/**
+ * Main Call Function
+ * @throws YeptapException
+ */
 function callHook()
 {
     global $url;
@@ -107,7 +123,10 @@ function callHook()
     }
 }
 
-/** GZip Output **/
+/**
+ * GZip Output
+ * @return bool
+ */
 function gzipOutput()
 {
     $ua = $_SERVER['HTTP_USER_AGENT'];
@@ -124,7 +143,10 @@ function gzipOutput()
     );
 }
 
-function my_exception_handler($e) {
+/**
+ * @param $e
+ */
+function yeptapExceptionHandler($e) {
     echo '<h1>Yeptap has caught an exception</h1>';
     echo '<h3>' . $e->getMessage() . '</h3>';
 
@@ -135,7 +157,7 @@ function my_exception_handler($e) {
         Logger::newMessage($e);
 }
 
-set_exception_handler('my_exception_handler');
+set_exception_handler('yeptapExceptionHandler');
 
 /** Get Required Files **/
 gzipOutput() || ob_start("ob_gzhandler");

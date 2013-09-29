@@ -1,6 +1,9 @@
 <?php
 class Yeptap
 {
+    /**
+     * @return string
+     */
     public static function themeBase()
     {
         return SITE_ROOT . 'assets/';

@@ -1,11 +1,17 @@
 <?php
 class MainController extends Controller
 {
+    /**
+     * Initialized before action execution
+     */
     public function beforeAction ()
     {
 
     }
 
+    /**
+     * action Index
+     */
     public function index()
     {
         $this->renderLayout = true; //optional
@@ -17,6 +23,9 @@ class MainController extends Controller
         $this->set('greet', $greet); //set in view
     }
 
+    /**
+     * Initialized after action execution
+     */
     public function afterAction()
     {
 
