@@ -5,4 +5,5 @@ require_once(SERVER_ROOT . DS . FRAMEWORK_DIR . DS . 'Autoloader.php');
 
 require_once(SERVER_ROOT . APP_DIR . DS .'config' . DS . 'main.php');
 
+$url = $_GET['url'];
 require_once(SERVER_ROOT . DS . FRAMEWORK_DIR . DS . 'helpers/shared.php');

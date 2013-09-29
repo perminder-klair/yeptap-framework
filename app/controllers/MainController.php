@@ -8,6 +8,8 @@ class MainController extends Controller
 
     public function index()
     {
+        $this->renderLayout = true; //optional
+
         $model = new Main(); //init model
         $model->greet = 'Hello world! This is Yeptap Framework.'; //set
         $greet = $model->greet; //get

@@ -4,42 +4,53 @@ class Template {
     protected $variables = array();
     protected $_controller;
     protected $_action;
+    protected $_viewPath;
+    protected $_layoutPath;
+    public $defaultLayout = 'main';
 
-    function __construct($controller, $action)
+    public function __construct($controller, $action)
     {
         $this->_controller = $controller;
         $this->_action = $action;
+
+        $this->_viewPath =  SERVER_ROOT . APP_DIR . DS . 'views' . DS . $this->_controller . DS;
+        $this->_layoutPath = SERVER_ROOT . APP_DIR . DS . 'views' . DS . 'layouts' . DS;
     }
 
     /** Set Variables **/
-
-    function set($name, $value)
+    public function set($name, $value)
     {
         $this->variables[$name] = $value;
     }
 
     /** Display Template **/
-
-    function render($renderHeader = true)
+    public function render($renderLayout = true)
     {
         extract($this->variables);
 
-        if ($renderHeader == true) {
-            if (file_exists(SERVER_ROOT . APP_DIR . DS . 'views' . DS . $this->_controller . DS . 'header.php')) {
-                include (SERVER_ROOT . APP_DIR . DS . 'views' . DS . $this->_controller . DS . 'header.php');
-            } else {
-                include (SERVER_ROOT . APP_DIR . DS . 'views' . DS . 'common' . DS . 'header.php');
+        $viewFile = $this->_viewPath . $this->_action . '.php';
+        if (!file_exists($viewFile))
+            return false;
+
+        if ($renderLayout === true) {
+            if (file_exists($this->_layoutPath . $this->defaultLayout .'.php')) {
+                include ($this->_layoutPath . $this->defaultLayout .'.php');
+            }
+        } elseif($renderLayout === false) {
+            include ($viewFile);
+        } else {
+            if (file_exists($this->_layoutPath . DS . $renderLayout .'.php')) {
+                include ($this->_layoutPath . DS . $renderLayout .'.php');
             }
         }
+    }
 
-        include (SERVER_ROOT . APP_DIR . DS . 'views' . DS . $this->_controller . DS . $this->_action . '.php');
+    public function renderPartial($partialFile, $data=array())
+    {
+        extract($data);
 
-        if ($renderHeader == true) {
-            if (file_exists(SERVER_ROOT . APP_DIR . DS . 'views' . DS . $this->_controller . DS . 'footer.php')) {
-                include (SERVER_ROOT . APP_DIR . DS . 'views' . DS . $this->_controller . DS . 'footer.php');
-            } else {
-                include (SERVER_ROOT . APP_DIR . DS . 'views' . DS . 'common' . DS . 'footer.php');
-            }
+        if (file_exists($this->_viewPath . $partialFile . '.php')) {
+            include ($this->_viewPath . $partialFile . '.php');
         }
     }
 
