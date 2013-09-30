@@ -12,6 +12,8 @@ class Template {
     public $defaultLayout = 'main';
 
     /**
+     * Initialization that the object may need before it is used
+     *
      * @param $controller
      * @param $action
      */
@@ -26,6 +28,7 @@ class Template {
 
     /**
      * Set Variables
+     *
      * @param $name
      * @param $value
      */
@@ -34,7 +37,9 @@ class Template {
         $this->variables[$name] = $value;
     }
 
-    /** Display Template **/
+    /** 
+     * Render View and Template 
+     */
     public function render($renderLayout = true)
     {
         extract($this->variables);
@@ -57,6 +62,8 @@ class Template {
     }
 
     /**
+     * Render Parital view file
+     * 
      * @param $partialFile
      * @param array $data
      * @throws YeptapException

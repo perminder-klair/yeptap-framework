@@ -10,6 +10,8 @@ class Controller
     public $renderLayout=true;
 
     /**
+     * Initialization that the object may need before it is used
+     *
      * @param $controller
      * @param $action
      */
@@ -31,7 +33,7 @@ class Controller
     }
 
     /**
-     * s
+     * The destructor method will be called as soon as there are no other references to a particular object
      */
     public function __destruct()
     {
