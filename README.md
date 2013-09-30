@@ -23,7 +23,8 @@ To change development environment change in:
 If you find any bugs, please create an issue at [issue tracker for project Github repository](https://github.com/perminder-klair/yeptap-framework/issues).
 
 ## Known Issues / ToDo
-* active record database system //TODO
+* ORM database //TODO
+* sessions //TODO
 
 ## License
 This work is licensed under a MIT license. Full text is included in the `LICENSE` file in the root of codebase.

@@ -11,7 +11,7 @@ class Main extends Model
      */
     public function __construct()
     {
-
+        parent::__construct();
     }
 
     /**
@@ -30,5 +30,16 @@ class Main extends Model
     public function __get($name)
     {
         return $this->$name;
+    }
+
+    public function getDbData()
+    {
+
+        $data = $this->db->query('SELECT * FROM actor');
+
+        foreach($data as $row) {
+            print_r($row);
+        }
+        exit;
     }
 }

@@ -8,3 +8,5 @@ Please update this document each time you close an issue by your commit.
 - **(enh)** adv debug and logger system
 - **(fix)** autoloader optimised
 - **(fix)** namespaces initialised properly
+- **(enh)** init components
+- **(enh)** PDO database integration

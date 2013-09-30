@@ -25,6 +25,8 @@ class MainController extends SiteController
         $greet = $model->greet; //get
 
         $this->set('greet', $greet); //set in view
+
+        //$model->getDbData();
     }
 
     /**
