@@ -6,6 +6,7 @@ class Html
 {
     /**
      * Shortens url using TinyUrl
+     *
      * @param $data
      * @return mixed
      */
@@ -33,6 +34,7 @@ class Html
 
     /**
      * Sanatize the data using mysql_real_escape_string
+     *
      * @param $data
      * @return string
      */

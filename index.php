@@ -11,8 +11,4 @@ define('FRAMEWORK_DIR' , 'yeptap');
 /**
  * Init app
  */
-//Autoload classes
-require_once(SERVER_ROOT . DS . FRAMEWORK_DIR . DS . 'Autoloader.php');
-\yeptap\Autoloader::register();
-
 require_once(SERVER_ROOT . DS . FRAMEWORK_DIR . DS . 'bootstrap.php');

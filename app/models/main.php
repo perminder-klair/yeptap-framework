@@ -6,6 +6,9 @@ use yeptap\base\Model;
 
 class Main extends Model
 {
+    /**
+     * Initialization that the object may need before it is used
+     */
     public function __construct()
     {
 
