@@ -1,8 +1,8 @@
 <?php
 
-use yeptap\base\Controller;
+use app\components\SiteController;
 
-class MainController extends Controller
+class MainController extends SiteController
 {
     /**
      * Initialized before action execution
