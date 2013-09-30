@@ -1,13 +1,16 @@
 # Yeptap Framework
 
-Super lite php MVC framework
+Super lite PHP MVC framework
 
 
 ## Setup
 Pull down and ready to use!
 
+## Usage
 `app` directory includes files used for app
+
 `yeptap` directory includes framework files
+
 `assets` directory can be used to store assets including images, css, js
 
 Note: Make sure following directories are writable to 0777:
