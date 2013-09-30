@@ -1,4 +1,7 @@
 <?php
+
+namespace yeptap\helpers;
+
 class Yeptap
 {
     /**

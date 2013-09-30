@@ -1,4 +1,9 @@
 <?php
+
+namespace app\models;
+
+use yeptap\base\Model;
+
 class Main extends Model
 {
     public function __construct()

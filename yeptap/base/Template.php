@@ -1,4 +1,7 @@
 <?php
+
+namespace yeptap\base;
+
 class Template {
 
     protected $variables = array();

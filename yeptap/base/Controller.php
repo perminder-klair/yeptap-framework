@@ -1,5 +1,7 @@
 <?php
 
+namespace yeptap\base;
+
 class Controller
 {
     protected $_controller;

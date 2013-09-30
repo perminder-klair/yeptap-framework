@@ -1,5 +1,7 @@
 <?php
 
+use yeptap\base\Controller;
+
 class MainController extends Controller
 {
     /**
@@ -17,7 +19,7 @@ class MainController extends Controller
     {
         $this->renderLayout = true; //optional
 
-        $model = new Main(); //init model
+        $model = new app\models\Main(); //init model
 
         $model->greet = 'Hello world! This is Yeptap Framework.'; //set
         $greet = $model->greet; //get

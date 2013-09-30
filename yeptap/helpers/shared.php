@@ -151,10 +151,10 @@ function yeptapExceptionHandler($e) {
     echo '<h3>' . $e->getMessage() . '</h3>';
 
     if (DEVELOPMENT_ENVIRONMENT===true) {
-        Debug::dump($e->getTraceAsString());
+        yeptap\base\Debug::dump($e->getTraceAsString());
     }
     if (LOG_ERRORS===true)
-        Logger::newMessage($e);
+        yeptap\base\Logger::newMessage($e);
 }
 
 set_exception_handler('yeptapExceptionHandler');

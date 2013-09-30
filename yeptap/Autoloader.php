@@ -12,9 +12,10 @@ class Autoloader
                     array_merge(
                         array(
                             __DIR__ . DIRECTORY_SEPARATOR,
+                            __DIR__ . DIRECTORY_SEPARATOR . 'base',
                             __DIR__ . DIRECTORY_SEPARATOR . 'helpers',
-                            SERVER_ROOT . APP_DIR . '/models',
-                            SERVER_ROOT . APP_DIR . '/controllers',
+                            SERVER_ROOT . APP_DIR . DIRECTORY_SEPARATOR . 'models',
+                            SERVER_ROOT . APP_DIR . DIRECTORY_SEPARATOR . 'controllers',
                         ),
                         explode(PATH_SEPARATOR, get_include_path())
                     )

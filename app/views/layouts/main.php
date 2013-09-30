@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title><?php echo SITE_NAME; ?> - Yeptap Framework</title>
 
-    <link rel="stylesheet" href="<?php echo Yeptap::themeBase(); ?>css/main.css">
+    <link rel="stylesheet" href="<?php echo yeptap\helpers\Yeptap::themeBase(); ?>css/main.css">
 </head>
 <body>
     <h1><?php echo SITE_NAME; ?></h1>

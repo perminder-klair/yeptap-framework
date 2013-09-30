@@ -1,5 +1,7 @@
 <?php
 
+namespace yeptap\base;
+
 class Debug
 {
 

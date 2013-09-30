@@ -1,4 +1,7 @@
 <?php
+
+namespace yeptap\base;
+
 class Model
 {
     protected $_model;

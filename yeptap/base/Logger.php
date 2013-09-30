@@ -1,4 +1,7 @@
 <?php
+
+namespace yeptap\base;
+
 class Logger
 {
     /**
