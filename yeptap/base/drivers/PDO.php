@@ -31,7 +31,6 @@ class PDO extends Database
         }
 
         return $this->pdo;
-
     }
 
     public function disconnect()

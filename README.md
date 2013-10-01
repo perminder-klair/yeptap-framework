@@ -1,6 +1,6 @@
 # Yeptap Framework
 
-Super lite PHP MVC framework
+Super lite PHP 5.3 MVC framework
 
 
 ## Setup
